@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Linq;
 
 public class Enemy : Character {
 
@@ -9,7 +10,12 @@ public class Enemy : Character {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	public override void Update () {
+		base.Update();
+		var player = Character.characters.OfType<Player>().FirstOrDefault();
+		if(player==null) return;
+		var vector = player.transform.position - transform.position;
+		vector.y = 0;
+		Move(vector.normalized);
 	}
 }
